@@ -26,6 +26,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Expand full UI into www/
+        run: |
+          python3 expand_www.py
+          ls -lh www/
+          head -3 www/index.html
+          test -s www/app.js
+          test -s www/styles.css
+
       - name: Install npm dependencies
         run: |
           npm install
@@ -37,7 +45,6 @@ jobs:
             npx cap add android
           fi
           npx cap sync android
-          ls -la android/
           test -f android/gradlew
 
       - name: Patch AndroidManifest permissions
@@ -47,11 +54,9 @@ jobs:
             if ! grep -q "POST_NOTIFICATIONS" "$MANIFEST"; then
               sed -i 's|<application|<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application|' "$MANIFEST"
             fi
-            echo "Manifest:"
             head -50 "$MANIFEST"
           else
             echo "ERROR: AndroidManifest.xml not found"
-            find android -name "*.xml" | head -20
             exit 1
           fi
 
