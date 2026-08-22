@@ -1,0 +1,23 @@
+{
+  "appId": "com.kay6888.vibecollector",
+  "appName": "Vibe-Collector",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#07070c",
+    "webContentsDebuggingEnabled": true
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon",
+      "iconColor": "#a855f7"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#07070c"
+    }
+  }
+}
