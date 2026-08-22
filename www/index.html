@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<meta name="theme-color" content="#07070c"/>
 <title>Vibe-Collector</title>
 <link rel="stylesheet" href="styles.css"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-[#07070c] text-white font-sans antialiased">
-<div id="app-root" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center">
-  <div>
-    <div style="width:72px;height:72px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#a855f7,#ec4899,#22d3ee)"></div>
-    <h1 style="font-size:1.5rem;font-weight:800;margin:0 0 8px">Vibe-Collector</h1>
-    <p style="color:#94a3b8;font-size:14px;max-width:260px;margin:0 auto 16px;line-height:1.5">Loading full UI… If you still see this, open TERMUX_BUILD.md and sync www/ files.</p>
-    <p style="color:#64748b;font-size:11px">com.kay6888.vibecollector</p>
-  </div>
+<body style="margin:0;background:#07070c;color:#fff;font-family:system-ui;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px">
+<div>
+<div style="width:72px;height:72px;margin:0 auto 16px;border-radius:20px;background:linear-gradient(135deg,#a855f7,#ec4899,#22d3ee)"></div>
+<h1 style="margin:0 0 8px">Vibe-Collector</h1>
+<p style="color:#94a3b8;max-width:280px;line-height:1.5;font-size:14px">This APK still has the placeholder UI. Push the full <code>www/</code> files from Termux (see below), then re-run Actions.</p>
+<pre style="text-align:left;background:#111;padding:12px;border-radius:12px;font-size:11px;overflow:auto;max-width:320px;color:#22d3ee">git clone https://github.com/kay6888/vibe-collector.git
+cd vibe-collector
+# copy full index.html styles.css app.js into www/
+git add www/
+git commit -m "Full UI"
+git push</pre>
+<p style="color:#64748b;font-size:11px;margin-top:16px">com.kay6888.vibecollector</p>
 </div>
 <script src="app.js"></script>
-<script>lucide.createIcons&&lucide.createIcons();</script>
 </body>
 </html>
