@@ -10,47 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
-
       - uses: android-actions/setup-android@v3
-
       - name: Expand full UI into www/
         run: |
           python3 expand_www.py
           ls -lh www/
           grep -q screen-welcome www/index.html
           grep -q PROJECTS www/app.js
-
-      - name: Install npm dependencies
-        run: npm install
-
-      - name: Add Capacitor Android platform
+      - run: npm install
+      - name: Capacitor Android
         run: |
           if [ ! -d android ]; then npx cap add android; fi
           npx cap sync android
-          test -f android/gradlew
-
-      - name: Patch AndroidManifest permissions
+      - name: Permissions
         run: |
-          MANIFEST="android/app/src/main/AndroidManifest.xml"
-          if [ -f "$MANIFEST" ] && ! grep -q POST_NOTIFICATIONS "$MANIFEST"; then
-            sed -i 's|<application|<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application|' "$MANIFEST"
+          M=android/app/src/main/AndroidManifest.xml
+          if [ -f "$M" ] && ! grep -q POST_NOTIFICATIONS "$M"; then
+            sed -i 's|<application|<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application|' "$M"
           fi
-
-      - name: Build debug APK
+      - name: Build APK
         working-directory: android
-        run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
-
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: vibe-collector-apk
