@@ -30,14 +30,12 @@ jobs:
         run: |
           python3 expand_www.py
           ls -lh www/
-          head -3 www/index.html
+          head -5 www/index.html
           test -s www/app.js
           test -s www/styles.css
 
       - name: Install npm dependencies
-        run: |
-          npm install
-          npx cap --version
+        run: npm install
 
       - name: Add Capacitor Android platform
         run: |
@@ -54,10 +52,6 @@ jobs:
             if ! grep -q "POST_NOTIFICATIONS" "$MANIFEST"; then
               sed -i 's|<application|<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n    <application|' "$MANIFEST"
             fi
-            head -50 "$MANIFEST"
-          else
-            echo "ERROR: AndroidManifest.xml not found"
-            exit 1
           fi
 
       - name: Build debug APK
@@ -72,8 +66,3 @@ jobs:
           name: vibe-collector-apk
           path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
-
-      - name: Summary
-        run: |
-          echo "### APK built successfully" >> $GITHUB_STEP_SUMMARY
-          ls -lh android/app/build/outputs/apk/debug/ || true
